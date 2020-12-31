@@ -5,7 +5,7 @@ function heuristic(a,b)
   if(chooseAlgorithm == 0)
     d = dist(a.x,a.y,b.x,b.y);
   
-  else 
+  if(chooseAlgorithm == 1)
     d=0;
   return d;
 }
@@ -100,41 +100,38 @@ function dijikAstar()
 }
 
 
-function dfs(startCell)
+function dfs()
 {
-  startCell.vis = 1;
-  visualize_grid();
-  if(startCell==end)
-  {
-      console.log("Done!");
-      alert("Path Found!!\nClick 'Clear Board' to start new sketch")
-      return;
-      
-  }
-
-  else if(openSet.length>0)
-  {  
-    neighbors = startCell.neigh;
-    for(var i=0;i<neighbors.length;i++)
+   
+   if(openSet.length!=0)
+   {
+    
+    var current = openSet.pop();
+    closedSet.push(current);
+    if(current==end)
     {
-      if(neighbors[i].vis==0 && neighbors[i].wall==false)
-      {
-        neighbors[i].vis = 1;
-        openSet.push(neighbors[i]);
-        dfs(neighbors[i]);
-      }
+      alert("Path Found!!\nClick 'Clear Board' to start new sketch");
+      noLoop();
     }
 
-    // removeFrom(openSet,startCell);
-    // closedSet.push(startCell);
-  }
+     var neighbors = current.neigh;
 
-  else
-  {
-    console.log("No Path found");
-    alert("Oops!! Looks like Path does Not Exist \nClick 'Clear Board' to start new sketch")
+     for(var i=0;i<neighbors.length;i++)
+     {
+       if(neighbors[i].vis==0 && neighbors[i].wall==false)
+       {
+         neighbors[i].vis = 1;
+         openSet.push(neighbors[i]);
+       }
+
+     }
+   }
+
+   else
+   {
+    alert("Oops!! Looks like Path does Not Exist \nClick 'Clear Board' to start new sketch");
+    console.log("not found");
+   }
     visualize_grid();
-    return;
-  }
 
 }

@@ -8,10 +8,10 @@ function removeFrom(arr,elt)
   }
 }
 
-var cols = 25;
-var rows = 25;
-var w ;
-var h ;
+var cols;
+var rows;
+var w = 40;
+var h = 40;
 var grid = new Array(cols);
 
 var rowNum = [-1,0,0,1,-1,-1,1,1];
@@ -159,17 +159,22 @@ function isAstar()
   chooseAlgorithm = 0;
 }
 
+function isDFS()
+{
+  chooseAlgorithm = 2;
+}
+
 function mouseDragged()
 {
-  var validx = Math.floor((mouseX/height)*rows);
-  var validy = Math.floor((mouseY/width)*cols);
+  var validx = Math.floor((mouseX/width)*rows);
+  var validy = Math.floor((mouseY/height)*cols);
 
   if(validx<rows && validy<cols)
   {
     if(choose_Start)
     {
-      var startx = Math.floor((mouseX/height)*rows);
-      var starty = Math.floor((mouseY/width)*cols);
+      var startx = Math.floor((mouseX/width)*rows);
+      var starty = Math.floor((mouseY/height)*cols);
       if(grid[startx][starty]!=undefined)
       {  
         start = grid[startx][starty];
@@ -184,8 +189,8 @@ function mouseDragged()
 
     else if(choose_End)
     {
-      var endx = Math.floor((mouseX/height)*rows);
-      var endy = Math.floor((mouseY/width)*cols);
+      var endx = Math.floor((mouseX/width)*rows);
+      var endy = Math.floor((mouseY/height)*cols);
       if(grid[endx][endy]!=undefined)
         end = grid[endx][endy];
       choose_End = 1;
@@ -195,8 +200,8 @@ function mouseDragged()
 
     else if(choose_Wall)
     {
-      var tempx = Math.floor((mouseX/height)*rows);
-      var tempy = Math.floor((mouseY/width)*cols);
+      var tempx = Math.floor((mouseX/width)*rows);
+      var tempy = Math.floor((mouseY/height)*cols);
       tempcell = grid[tempx][tempy];
       if(grid[tempx][tempy]!=undefined)
         tempcell.wall = true;
@@ -207,8 +212,8 @@ function mouseDragged()
 
     else if(choose_del_Wall)
     {
-      var tempx = Math.floor((mouseX/height)*rows);
-      var tempy = Math.floor((mouseY/width)*cols);
+      var tempx = Math.floor((mouseX/width)*rows);
+      var tempy = Math.floor((mouseY/height)*cols);
       tempcell = grid[tempx][tempy];
       if(grid[tempx][tempy]!=undefined)
         tempcell.wall = false;
@@ -239,26 +244,17 @@ function mouseClicked()
   }
 }
 
-
-
-function setup() {
-  // put setup code here
-
-  var canvas = createCanvas(800, 800);
-  canvas.parent('sketch-holder');
-  resetSketch();
-  
-  
-}
-
 function resetSketch()
 {
-  w = width/cols;
-  h = height/rows;
+  var navbar = document.getElementById("NavBarDark");
+  var offset = navbar.offsetHeight;
+
+  rows = floor(width/w);
+  cols = floor((height-offset)/h);
 
   //making of grids
-  for(var i=0;i<cols;i++)
-    grid[i] = new Array(rows);
+  for(var i=0;i<rows;i++)
+    grid[i] = new Array(cols);
 
   //initializations of cells and grid
   for(var i=0;i<rows;i++)
@@ -277,22 +273,45 @@ function resetSketch()
     }
   }  
 
+  // mazeGenerate();
+
   start = grid[0][0];
   end = grid[rows-1][cols-1];
   openSet.push(start);
   start.wall = false;
   end.wall = false;
   programm_started = false
+   
+  start.vis=1;
+  
 }
+
+
+
+function setup() {
+  // put setup code here
+
+  var canvas = createCanvas(windowWidth, windowHeight);
+  canvas.parent('sketch-holder');
+  
+  resetSketch();
+  
+  
+}
+
+
 
 function draw() {
   // put drawing code here
-  background(0);
+  background(255);
   visualize_grid();
 
   if(programm_started==true)
   { 
-    dijikAstar();
+    if(chooseAlgorithm==2)
+      dfs();
+    else
+      dijikAstar();
   }
   
 }
