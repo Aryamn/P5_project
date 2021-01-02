@@ -110,6 +110,16 @@ function dfs()
     closedSet.push(current);
     if(current==end)
     {
+      path = [];
+      path.push(current);
+      var temparent =  current;
+      while(temparent!=start)
+      {
+        path.push(temparent.parent);
+        temparent = temparent.parent;
+      }
+      console.log("Done!");
+      visualize_grid();
       alert("Path Found!!\nClick 'Clear Board' to start new sketch");
       noLoop();
     }
@@ -121,10 +131,22 @@ function dfs()
        if(neighbors[i].vis==0 && neighbors[i].wall==false)
        {
          neighbors[i].vis = 1;
+         neighbors[i].parent = current;
          openSet.push(neighbors[i]);
        }
 
      }
+
+     path = [];
+     path.push(current);
+     var temparent =  current;
+     while(temparent!=start)
+     {
+       path.push(temparent.parent);
+       temparent = temparent.parent;
+     }
+
+    visualize_grid();
    }
 
    else
