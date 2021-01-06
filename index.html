@@ -19,9 +19,9 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav  mr-auto">
         <li class="nav-item">
-          <a class="nav-link " href="javascript:;" onclick="isStart()">Choose Start</a>  
+          <a class="nav-link " href="javascript:;" onclick="isStart()">Choose Start</a> 
         </li>
 
         <li class="nav-item">
@@ -29,8 +29,8 @@
         </li>
 
         <li class="nav-item dropdown ">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="javascript;;" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" onclick="initialize()">
             Wall Options
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -61,13 +61,13 @@
 
         <li class="nav-item dropdown ">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
+            aria-haspopup="true" aria-expanded="false" onclick="initialize()">
             Algorithm
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item btn" href="javascript:;" onclick="isAstar()">A* (Euclidean)</a>
             <a class="dropdown-item btn" href="javascript:;" onclick="isDijikstra()">Dijikstra</a>
-            <a class="dropdown-item btn" href="javascript:;" onclick="isDijikstra()">BFS(Breadth First Search)</a>
+            <a class="dropdown-item btn" href="javascript:;" onclick="isBFS()">BFS(Breadth First Search)</a>
             <a class="dropdown-item btn" href="javascript:;" onclick="isDFS()">DFS(Depth First Search)</a>
           </div>
         </li>

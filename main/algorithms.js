@@ -157,3 +157,59 @@ function dfs()
     visualize_grid();
 
 }
+
+function bfs()
+{
+  if(!Q.isEmpty())
+  {
+    var current = Q.front();
+    Q.dequeue();
+    if(current==end)
+    {
+      path = [];
+      path.push(current);
+      var temparent =  current;
+      while(temparent!=start)
+      {
+        path.push(temparent.parent);
+        temparent = temparent.parent;
+      }
+      console.log("Done!");
+      visualize_grid();
+      alert("Path Found!!\nClick 'Clear Board' to start new sketch");
+      noLoop();
+    }
+    closedSet.push(current)
+    current.vis = 1;
+    var neighbors = current.neigh;
+    for(var i=0;i<neighbors.length;i++)
+    {
+      if(neighbors[i].vis==0 && neighbors[i].wall==false)
+      {
+        neighbors[i].vis = 1;
+        neighbors[i].parent = current;
+        Q.enqueue(neighbors[i]);
+        openSet.push(neighbors[i]);
+      }
+    }
+
+    path = [];
+    path.push(current);
+    var temparent =  current;
+    while(temparent!=start)
+    {
+      path.push(temparent.parent);
+      temparent = temparent.parent;
+    }
+
+   visualize_grid();
+
+  }
+
+  else
+   {
+    alert("Oops!! Looks like Path does Not Exist \nClick 'Clear Board' to start new sketch");
+    console.log("not found");
+   }
+    visualize_grid();
+}

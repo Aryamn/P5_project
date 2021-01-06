@@ -164,6 +164,11 @@ function isDFS()
   chooseAlgorithm = 2;
 }
 
+function isBFS()
+{
+  chooseAlgorithm = 3;
+}
+
 function mouseDragged()
 {
   var validx = Math.floor((mouseX/width)*rows);
@@ -178,7 +183,9 @@ function mouseDragged()
       if(grid[startx][starty]!=undefined)
       {  
         start = grid[startx][starty];
-        openSet.splice(0,openSet.length)
+        openSet.splice(0,openSet.length);
+        Q.dequeue();
+        Q.enqueue(start);
         openSet.push(start);
       }
       choose_Start = 1;
@@ -225,24 +232,24 @@ function mouseDragged()
   
 }
 
-var chooseRandomWall=0;
-function isRandomWall()
+
+function initialize()
 {
-  chooseRandomWall = 1;
   choose_End = 0;
   choose_Start = 0;
   choose_Wall = 0;
   choose_del_Wall = 0;
 }
 
-function mouseClicked()
+function isRandomWall()
 {
-  if(chooseRandomWall)
-  {
-    randomWalls();
-    chooseRandomWall = 0;
-  }
+  choose_End = 0;
+  choose_Start = 0;
+  choose_Wall = 0;
+  choose_del_Wall = 0;
+  randomWalls();
 }
+
 
 function resetSketch()
 {
@@ -281,12 +288,55 @@ function resetSketch()
   start.wall = false;
   end.wall = false;
   programm_started = false
-   
+  
   start.vis=1;
   
 }
 
+class Queue 
+{ 
+    // Array is used to implement a Queue 
+    constructor() 
+    { 
+        this.items = []; 
+    } 
+                  
+    // Functions to be implemented 
+    enqueue(element) 
+    {     
+        // adding element to the queue 
+        this.items.push(element); 
+    } 
 
+    dequeue() 
+    { 
+        // removing element from the queue 
+        // returns underflow when called  
+        // on empty queue 
+        if(this.isEmpty()) 
+            return "Underflow"; 
+        return this.items.shift(); 
+    }
+
+    
+    front() 
+    { 
+        // returns the Front element of  
+        // the queue without removing it. 
+        if(this.isEmpty()) 
+            return "No elements in Queue"; 
+        return this.items[0]; 
+    } 
+    
+    isEmpty() 
+    { 
+        // return true if the queue is empty. 
+        return this.items.length == 0; 
+    }  
+} 
+
+var Q = new Queue();
+Q.enqueue(start);
 
 function setup() {
   // put setup code here
@@ -300,16 +350,16 @@ function setup() {
 }
 
 
-
 function draw() {
-  // put drawing code here
   background(255);
   visualize_grid();
-
   if(programm_started==true)
   { 
     if(chooseAlgorithm==2)
       dfs();
+
+    else if(chooseAlgorithm==3)
+      bfs();
     else
       dijikAstar();
   }
